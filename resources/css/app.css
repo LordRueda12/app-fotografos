@@ -1,0 +1,85 @@
+@import '@fortawesome/fontawesome-free/css/all.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.section.unete{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow: scroll;
+}
+header{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: rgb(30, 30, 30);
+}
+header .link{
+    padding: 2.6em 1em;
+    color: white;
+    font-size: 1.4em;
+    display: grid;
+    place-items: center;
+    position: relative;
+    user-select: none;
+    cursor: pointer;
+    &.active::after{
+        content: '';
+        width: 58%;
+        height: 2px;
+        background-color: white;
+        position: absolute;
+        bottom: 1em;
+        left: 0;
+    }
+}
+.busqueda{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    
+    & label{
+        position: relative;
+        border-radius: 1.5em;
+        overflow: hidden;
+        height: 3em;
+        border: 1px solid #787878;
+        background-color: #fff;
+        color: #4f4f4f;
+        display: grid;
+        grid-template-columns: 1fr;
+        place-content: center;
+        width: 70%;
+
+    }
+    & input{
+        padding: 0.5em 2.7em 0.5em 1em;
+        border: none;
+        outline: none;
+        box-shadow: none !important;
+        width: 100%;
+    }
+    & i{
+        position: absolute;
+        right: 0.9em;
+        z-index: 1;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+}
+.section{
+    flex-grow: 1;
+}
+.section.fotografos{
+    padding: 1em;
+    background-color: rgb(30, 30, 30);
+}
+.welcome{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    background-color: rgb(30, 30, 30);
+    height: 100vh;
+}
+
