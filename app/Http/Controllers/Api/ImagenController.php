@@ -101,4 +101,17 @@ class ImagenController extends Controller
         return response()->json(['mensaje' => 'Imagen eliminada exitosamente'], 200);
     }
 
+    /**
+     * Obtener todas las imágenes de un usuario específico.
+     */
+    public function getImagesByUser(string $userId)
+    {
+        $imagenes = Imagen::where('user_id', $userId)->get();
+
+        if ($imagenes->isEmpty()) {
+            return response()->json(['mensaje' => 'No se encontraron imágenes para este usuario'], 404);
+        }
+
+        return response()->json($imagenes, 200);
+    }
 }

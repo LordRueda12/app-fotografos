@@ -1,0 +1,137 @@
+.dashboard {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+.section{
+    flex-grow: 1;
+    overflow-y: auto;
+    height: 100%;
+}
+.welcome {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: rgb(30, 30, 30); 
+    color: white; 
+    height: 100vh; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.dashboard {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+.name-section {
+    font-size: 80px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 90px;
+    transform: translate(-40%,-10px); 
+}
+
+.description-section {
+    font-size: 18px;
+    line-height: 1.6;
+    text-align: left;
+    color: white; 
+    width: 45%; 
+    margin: 0 auto; 
+    transform: translate(-40%, -40px); 
+}
+.button-section {
+    margin-top: 20px;
+    display: flex;
+    gap: 20px; 
+}
+
+.contact-button, .profile-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background-color: rgb(50, 50, 50);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.contact-button:hover, .profile-button:hover {
+    background-color: rgb(70, 70, 70);
+}
+
+.image-circle {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%; 
+    overflow: hidden; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(50, 50, 50); 
+    top: 40%;
+    left: 85%;
+    flex-shrink: 0;
+    position: absolute;
+}
+
+.image-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+}
+
+.image-circle2{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%; 
+    overflow: hidden; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(50, 50, 50); 
+    top: 65%;
+    left: 70%;
+    flex-shrink: 0;
+    position: absolute;
+}
+
+.image-circle2 img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+}
+
+
+
+
+
+.navigation-buttons {
+    position: absolute;
+    bottom: 20px; 
+    width:max-content;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    gap: 70px;
+}
+
+.navigation-buttons button {
+    padding: 10px 20px;
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    background-color: rgb(50, 50, 50);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.navigation-buttons button:hover {
+    background-color: rgb(70, 70, 70);
+}

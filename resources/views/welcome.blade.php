@@ -3,15 +3,51 @@
 @section('title','Inicio | App Fotógrafos')
 
 @section('content')
+@vite(['resources/css/welcome.css'])
 <div class="welcome" x-data="main">
     <header>
-        <div class="link fotografos" :class="section== 'photographers'? 'active': ''" @click="setSection('photographers')">Fotógrafos</div>
-        <div class="link albums" :class="section== 'albums'? 'active': ''" @click="setSection('albums')">Álbums</div>
-        <div class="link unete" :class="section== 'register'? 'active': ''" @click="setSection('register')">Únete</div>
+        <div class="link inicio" :class="section== 'welcome'? 'active': ''" @click="setSection('welcome')">Inicio</div>
+        <div class="link unete" :class="section== 'register-client'? 'active': ''" @click="setSection('register-client')">Únete Cliente</div>
+        <div class="link unete" :class="section== 'register-photographer'? 'active': ''" @click="setSection('register-photographer')">Únete Fotografo</div>
         <div class="link login" :class="section== 'login'? 'active': ''" @click="setSection('login')">Iniciar Sesión</div> 
     </header>
+    <template x-if="section === 'welcome'">
+        <div class="welcome section">
+    
+            <div class="name-section">
+                Bienvenido 
+            </div>
+        
+            <div class="description-section">
+                Lorem ipsum dolor sit amet, consectetur adipiscing 
+                Lorem ipsum dolor sit amet, consectetur adipiscing 
+                Lorem ipsum dolor sit amet, consectetur adipiscing 
+                Lorem ipsum dolor sit amet, consectetur adipiscing 
+            </div>
+        
+            <div class="button-section">
+                <button class="contact-button">Contactar</button>
+                <button class="profile-button">Perfil</button>
+            </div>
+        
+            <div class="image-circle">
+                <img src="/path/to/your/image.jpg" alt="User Image">
+            </div>
+        
+            <div class="image-circle2">
+                <img src="/path/to/your/image.jpg" alt="User Image">
+            </div>
+        
+            
+        
+            <div class="navigation-buttons">
+                <button class="prev-button">&lt;</button>
+                <button class="next-button">&gt;</button>
+            </div>
+        </div>
+        </template>
     <template x-if="section === 'photographers'">
-        <div class="section fotografos">
+        <div class="section fotografos section">
             <div class="busqueda">
                 <label for="search" class="search">
                     <input type="text" id="search" placeholder="Nombre del fotógrafo o teléfono" x-model="searchTerm" @input="filterPhotographers">
@@ -32,15 +68,16 @@
         </div>
     </template>
     <template x-if="section === 'albums'">
-        <div class="section albums">
+        <div class="section albums section">
             <h1>Álbums</h1>
             <p>Explora nuestros álbumes de fotos.</p>
         </div>
     </template>
-    <template x-if="section === 'register'">
-        <div class="section unete">
+    <template x-if="section === 'register-client'">
+        <div class="section unete section">
             <form method="POST" action="{{ route('register') }}">
                 @csrf
+                <input type="hidden" name="role_id" value="3">
 
                 <!-- Name -->
                 <div>
@@ -87,6 +124,11 @@
                     </x-primary-button>
                 </div>
             </form>
+            
+        </div>
+    </template>
+    <template x-if="section === 'register-photographer'">
+        <div class="section unete">
             <form method="POST" action="{{ route('register') }}">
                 @csrf
 
@@ -159,10 +201,11 @@
                     </x-primary-button>
                 </div>
             </form>
+            
         </div>
     </template>
     <template x-if="section === 'login'">
-        <div class="section login">
+        <div class="section login section">
             <form method="POST" action="{{ route('login') }}">
                 @csrf
         

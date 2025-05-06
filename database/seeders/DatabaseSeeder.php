@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
         // Run the RolesSeeder first
         $this->call([
             RoleSeeder::class,
+            CategoriaImagenSeeder::class
         ]);
     }
 }

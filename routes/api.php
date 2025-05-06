@@ -10,3 +10,5 @@ Route::get('/user', function (Request $request) {
 
 Route::apiResource('imagenes', ImagenController::class);
 Route::apiResource('categorias', \App\Http\Controllers\Api\CategoriaImagenController::class);
+
+Route::get('imagenes/usuario/{userId}', [ImagenController::class, 'getImagesByUser']);

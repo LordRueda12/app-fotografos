@@ -75,11 +75,6 @@ header .link{
     padding: 1em;
     background-color: rgb(30, 30, 30);
 }
-.welcome{
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    background-color: rgb(30, 30, 30);
-    height: 100vh;
-}
+
+
 
