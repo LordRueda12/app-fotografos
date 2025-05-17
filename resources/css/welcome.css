@@ -70,44 +70,51 @@
 .image-circle {
     width: 150px;
     height: 150px;
-    border-radius: 50%; 
-    overflow: hidden; 
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(50, 50, 50); 
-    top: 40%;
-    left: 85%;
+    bottom: 4em;
+    right: 4em;
     flex-shrink: 0;
     position: absolute;
-}
+    transform:rotate(0deg);
+    filter: blur(2px);
+    transform: scale(0.76);
+    &:not(.dontAnimate){
+        transition: all 0.8s ease;
+    }
+    &.active{
+        transform: rotate(0) scale(1.5);
+        filter: blur(0);
+        z-index: 2;
+        pointer-events: none;
+    }
+    &.passed{
+        transform:rotate(145deg);
+        filter: blur(4px);
+        transform: scale(0.37);
+    }
+    &.hidden{
+        transform:rotate(-140deg);
+        display: block;
+        filter: blur(70px);
+        transform: scale(0.1);
+    }
+    &.previous{
+        transform:rotate(-45deg);
+        filter: blur(4px);
+        transform: scale(0.25);
 
+    }
+}
 .image-circle img {
     width: 100%;
     height: 100%;
-    object-fit: cover; 
-}
-
-.image-circle2{
-    width: 150px;
-    height: 150px;
+    transform: translate(-135px, -135px);
     border-radius: 50%; 
-    overflow: hidden; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgb(50, 50, 50); 
-    top: 65%;
-    left: 70%;
-    flex-shrink: 0;
-    position: absolute;
-}
-
-.image-circle2 img {
-    width: 100%;
-    height: 100%;
     object-fit: cover; 
 }
+
 
 
 
@@ -136,4 +143,121 @@
 
 .navigation-buttons button:hover {
     background-color: rgb(70, 70, 70);
+}
+
+
+.navigation-buttons {
+    position: absolute;
+    bottom: 20px; 
+    width:max-content;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    gap: 70px;
+}
+
+.navigation-buttons button {
+    padding: 10px 20px;
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    background-color: rgb(50, 50, 50);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.navigation-buttons button:hover {
+    background-color: rgb(70, 70, 70);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"] {
+    color: black; 
+    background-color: white; 
+    border: 1px solid #ccc; 
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+input[type="text"]::placeholder,
+input[type="email"]::placeholder,
+input[type="password"]::placeholder,
+input[type="number"]::placeholder {
+    color: #888; 
+}
+
+
+.section.unete {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; 
+    padding: 20px;
+}
+
+.section.unete form {
+    margin-bottom: -280px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    background-color: rgb(40, 40, 40); 
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 45%; 
+}
+
+
+.section.unete input[type="text"],
+.section.unete input[type="email"],
+.section.unete input[type="password"],
+.section.unete input[type="number"] {
+    width: 100%; 
+    padding: 10px;
+    font-size: 16px;
+    color: black;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.section.unete input[type="text"]:focus,
+.section.unete input[type="email"]:focus,
+.section.unete input[type="password"]:focus,
+.section.unete input[type="number"]:focus {
+    border-color: rgb(100, 100, 100); 
+}
+
+
+.section.unete label {
+    font-size: 14px;
+    color: white;
+    align-self: flex-start; 
+}
+
+
+.section.unete button[type="submit"] {
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    background-color: rgb(70, 70, 70);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.section.unete button[type="submit"]:hover {
+    background-color: rgb(90, 90, 90);
 }

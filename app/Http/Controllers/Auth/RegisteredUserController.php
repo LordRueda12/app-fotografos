@@ -38,6 +38,8 @@ class RegisteredUserController extends Controller
             'precio_foto' => ['nullable', 'integer'],
             'certificado' => ['nullable', 'string', 'max:255'],
             'role_id' => ['required', 'integer', 'exists:roles,id'],
+            'profile_image' => ['nullable', 'image'], 
+            'description' => ['nullable', 'string', 'max:500'],
         ]);
 
 
@@ -50,6 +52,8 @@ class RegisteredUserController extends Controller
             'precio_foto' => $request->precio_foto,
             'certificado' => $request->certificado,
             'role_id' => $request->role_id,
+            'profile_image' => $request->file('profile_image') ? $request->file('profile_image')->store('profile_images', 'public') : null,
+            'description' => $request->description,
         ]);
 
         event(new Registered($user));

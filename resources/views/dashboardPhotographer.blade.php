@@ -135,7 +135,7 @@
                             </div>
                         </template>
 
-                        <!-- Second layout: One big picture above two small pictures -->
+                       
                         <template x-if="page[3]">
                             <div class="large-picture2">
                                 <img :src="`/storage/${page[3].ruta}`" alt="">

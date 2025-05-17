@@ -26,6 +26,8 @@ class User extends Authenticatable
         'precio_foto',  // Added precio_foto column
         'certificado',  // Added certificado column
         'role_id',      // Added role_id column
+        'profile_image', // Added profile_image column
+        'description', // Added description column
     ];
 
     /**
@@ -57,5 +59,13 @@ class User extends Authenticatable
     public function role()
     {
         return $this->belongsTo(Role::class);
+    }
+
+    /**
+     * Get the imagenes associated with the user.
+     */
+    public function imagenes()
+    {
+        return $this->hasMany(Imagen::class, 'user_id');
     }
 }

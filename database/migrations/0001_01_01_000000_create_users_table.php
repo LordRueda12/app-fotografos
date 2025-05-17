@@ -25,11 +25,13 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('phone'); // Add phone column
-            $table->string('cedula')->nullable(); // Add nullable cedula column
-            $table->integer('precio_foto')->nullable(); // Add nullable precio_foto column
-            $table->string('certificado')->nullable(); // Add nullable certificado column
+            $table->string('phone'); 
+            $table->string('cedula')->nullable(); 
+            $table->integer('precio_foto')->nullable(); 
+            $table->string('certificado')->nullable(); 
             $table->foreignId('role_id')->constrained('roles')->onDelete('cascade'); 
+            $table->string('profile_image')->nullable();
+            $table->string('description')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

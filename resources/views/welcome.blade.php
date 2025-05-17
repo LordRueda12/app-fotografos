@@ -11,38 +11,106 @@
         <div class="link unete" :class="section== 'register-photographer'? 'active': ''" @click="setSection('register-photographer')">Únete Fotografo</div>
         <div class="link login" :class="section== 'login'? 'active': ''" @click="setSection('login')">Iniciar Sesión</div> 
     </header>
+    <template x-if="!!photographer">
+        <div class="fotografo">
+            <div class="close" @click="closeProfile">✖️</div>
+            <div class="fotografo-header">
+                <div class="left">
+                    <figure class="profile-pic">
+                        <img :src="`/storage/${photographer.profile_image}`" alt="User Image">
+                    </figure>
+                </div>
+                <div class="right">
+                    <div class="fotografo-name" x-text="photographer.name"></div>
+                    <div class="fotografo-description" x-text="photographer.description"></div>
+                </div>
+            </div>
+            <div class="card-container">
+                <div class="card">Impresiones Fotográficas</div>
+                <div class="card">Servicio Digital</div>
+                <div class="card">Retrato</div>
+                <div class="card">Combos</div>
+            </div>
+            <template x-for="(page, index) in photographer.pages" :key="index">
+            <div class="picture-container">
+                <template x-if="page[0]">
+                    <div class="small-picture1">
+                        <img :src="`/storage/${page[0].ruta}`" alt="">
+                    </div>
+                </template>
+                <template x-if="page[1]">
+                    <div class="small-picture2">
+                        <img :src="`/storage/${page[1].ruta}`" alt="">
+                    </div>
+                </template>
+                <template x-if="page[2]">
+                    <div class="large-picture1">
+                        <img :src="`/storage/${page[2].ruta}`" alt="">
+                    </div>
+                </template>
+
+                <!-- Second layout: One big picture above two small pictures -->
+                <template x-if="page[3]">
+                    <div class="large-picture2">
+                        <img :src="`/storage/${page[3].ruta}`" alt="">
+                    </div>
+                </template>
+                <template x-if="page[4]">
+                    <div class="small-picture3">
+                        <img :src="`/storage/${page[4].ruta}`" alt="">
+                    </div>
+                </template>
+                <template x-if="page[5]">
+                    <div class="small-picture4">
+                        <img :src="`/storage/${page[5].ruta}`" alt="">
+                    </div>
+                </template>
+            </div>
+            </template>
+            <button class="contact-button">Contactar</button>
+        </div>
+    </template>
     <template x-if="section === 'welcome'">
-        <div class="welcome section">
-    
-            <div class="name-section">
-                Bienvenido 
+        <div class="section welcome" x-data="photographers">
+            <div class="name-section" x-text="photographers[active].name">
             </div>
-        
-            <div class="description-section">
-                Lorem ipsum dolor sit amet, consectetur adipiscing 
-                Lorem ipsum dolor sit amet, consectetur adipiscing 
-                Lorem ipsum dolor sit amet, consectetur adipiscing 
-                Lorem ipsum dolor sit amet, consectetur adipiscing 
+            <div class="description-section" x-text="photographers[active].description">
             </div>
-        
             <div class="button-section">
                 <button class="contact-button">Contactar</button>
-                <button class="profile-button">Perfil</button>
+                <button class="profile-button" @click="openProfile(photographers[active])">Perfil</button>
             </div>
-        
-            <div class="image-circle">
-                <img src="/path/to/your/image.jpg" alt="User Image">
-            </div>
-        
-            <div class="image-circle2">
-                <img src="/path/to/your/image.jpg" alt="User Image">
-            </div>
-        
-            
-        
+            <template x-if="!photographer">
+                
+            </template>
+            <template x-if="photographers.length > 0">
+                <div class="image-circle" :class="[activeAnimation== 0? 'passed': activeAnimation== -1?'active': 'hidden', !activeAnimation?'dontAnimate': '']">
+                    <img :src="`/storage/${photographers[(active - 1 + photographers.length) % photographers.length].profile_image}`" alt="User Image">
+                </div>
+            </template>
+            <template x-if="photographers.length > 0">
+                <div class="image-circle" :class="[activeAnimation== 0? 'active': activeAnimation== -1?'': 'passed', !activeAnimation?'dontAnimate': '']">
+                    <img :src="`/storage/${photographers[active % photographers.length].profile_image}`" alt="User Image">
+                </div>
+            </template>
+            <template x-if="photographers.length > 0">
+                <div class="image-circle" :class="[activeAnimation== 0? '': activeAnimation== -1?'previous':'active', !activeAnimation?'dontAnimate': '']">
+                    <img :src="`/storage/${photographers[(active + 1) % photographers.length].profile_image}`" alt="User Image">
+                </div>
+            </template>
+            <template x-if="photographers.length > 0">
+                <div class="image-circle" :class="[activeAnimation== 0? 'previous': activeAnimation== -1?'hidden':'', !activeAnimation?'dontAnimate': '']">
+                    <img :src="`/storage/${photographers[(active + 2) % photographers.length].profile_image}`" alt="User Image">
+                </div>
+            </template>
+            <template x-if="photographers.length > 0">
+                <div class="image-circle" :class="[activeAnimation== 0? 'hidden': activeAnimation== -1?'passed':'previous', !activeAnimation?'dontAnimate': '']">
+                    <img :src="`/storage/${photographers[(active + 3) % photographers.length].profile_image}`" alt="User Image">
+                </div>
+            </template>
             <div class="navigation-buttons">
-                <button class="prev-button">&lt;</button>
-                <button class="next-button">&gt;</button>
+                <button class="prev-button" @click="prevPhotographer">&lt;</button>
+                <button class="next-button" @click="nextPhotographer">&gt;</button>
             </div>
         </div>
         </template>
@@ -81,7 +149,7 @@
 
                 <!-- Name -->
                 <div>
-                    <x-input-label for="name_" :value="__('Name')" />
+                    <x-input-label for="name_" :value="__('Nombre')" />
                     <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
                     <x-input-error :messages="$errors->get('name')" class="mt-2" />
                 </div>
@@ -95,21 +163,21 @@
 
                 <!-- Phone -->
                 <div class="mt-4">
-                    <x-input-label for="phone" :value="__('Phone')" />
+                    <x-input-label for="phone" :value="__('Celular')" />
                     <x-text-input id="phone" class="block mt-1 w-full" type="text" name="phone" :value="old('phone')" required autocomplete="tel" />
                     <x-input-error :messages="$errors->get('phone')" class="mt-2" />
                 </div>
 
                 <!-- Password -->
                 <div class="mt-4">
-                    <x-input-label for="password" :value="__('Password')" />
+                    <x-input-label for="password" :value="__('Contraseña')" />
                     <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
                     <x-input-error :messages="$errors->get('password')" class="mt-2" />
                 </div>
 
                 <!-- Confirm Password -->
                 <div class="mt-4">
-                    <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+                    <x-input-label for="password_confirmation" :value="__('Confirmar contraseña')" />
                     <x-text-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
                     <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
                 </div>
@@ -137,7 +205,7 @@
 
                 <!-- Name -->
                 <div>
-                    <x-input-label for="name" :value="__('Name')" />
+                    <x-input-label for="name" :value="__('Nombre')" />
                     <x-text-input id="name_photographer" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
                     <x-input-error :messages="$errors->get('name')" class="mt-2" />
                 </div>
@@ -151,14 +219,14 @@
 
                 <!-- Phone -->
                 <div class="mt-4">
-                    <x-input-label for="phone_photographer" :value="__('Phone')" />
+                    <x-input-label for="phone_photographer" :value="__('Celular')" />
                     <x-text-input id="phone_photographer" class="block mt-1 w-full" type="text" name="phone" :value="old('phone')" required autocomplete="tel" />
                     <x-input-error :messages="$errors->get('phone')" class="mt-2" />
                 </div>
 
                 <!-- Cedula -->
                 <div class="mt-4">
-                    <x-input-label for="cedula_photographer" :value="__('Cedula')" />
+                    <x-input-label for="cedula_photographer" :value="__('Cédula')" />
                     <x-text-input id="cedula_photographer" class="block mt-1 w-full" type="text" name="cedula" :value="old('cedula')" autocomplete="cedula" />
                     <x-input-error :messages="$errors->get('cedula')" class="mt-2" />
                 </div>
@@ -170,23 +238,16 @@
                     <x-input-error :messages="$errors->get('precio_foto')" class="mt-2" />
                 </div>
 
-                <!-- Certificado -->
-                <div class="mt-4">
-                    <x-input-label for="certificado_photographer" :value="__('Certificado')" />
-                    <x-text-input id="certificado_photographer" class="block mt-1 w-full" type="text" name="certificado" :value="old('certificado')" autocomplete="certificado" />
-                    <x-input-error :messages="$errors->get('certificado')" class="mt-2" />
-                </div>
-
                 <!-- Password -->
                 <div class="mt-4">
-                    <x-input-label for="password_photographer" :value="__('Password')" />
+                    <x-input-label for="password_photographer" :value="__('Contraseña')" />
                     <x-text-input id="password_photographer" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
                     <x-input-error :messages="$errors->get('password')" class="mt-2" />
                 </div>
 
                 <!-- Confirm Password -->
                 <div class="mt-4">
-                    <x-input-label for="password_confirmation_photographer" :value="__('Confirm Password')" />
+                    <x-input-label for="password_confirmation_photographer" :value="__('Confirmar contraseña')" />
                     <x-text-input id="password_confirmation_photographer" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
                     <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
                 </div>

@@ -7,6 +7,7 @@ window.Alpine = Alpine;
 Alpine.data('main', () => ({
     categorias: [],
     section: 'welcome',
+    photographer: null,
     routes: {
         "register": "unete",
         "login": "iniciar-sesion",
@@ -38,6 +39,9 @@ Alpine.data('main', () => ({
     setSection(section) {
         this.section = section;
         window.history.pushState({}, '', this.routes[section]);
+    },
+    closeProfile(){
+        this.photographer = null;
     }
 }));
 Alpine.data('photographers', () => ({
@@ -118,8 +122,49 @@ Alpine.data('myImages', () => ({
         }
     },
 }));
+Alpine.data('photographers', () => ({
+    photographers: null,
+    active: 0,
+    activeAnimation: 0,
+    init(){
+        this.fetchPhotographers();
+    },
+    fetchPhotographers() {
+        fetch('http://localhost:8000/api/photographers', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            this.photographers = data;
+        })
+        .catch(error => console.error('Error:', error));
+    },
+    nextPhotographer(){
+        this.activeAnimation= 1;
+        setTimeout(() => {
+            this.active= (this.active + 1) % this.photographers.length;
+            this.activeAnimation = 0;
+        }, 1000);
+    },
+    prevPhotographer(){
+        this.activeAnimation= -1;
+        setTimeout(() => {
+            this.active= (this.active - 1 + this.photographers.length) % this.photographers.length;
+            this.activeAnimation = 0;
+        }, 1000);
+    },
+    openProfile(photographer){
+        this.photographer = photographer;
+        this.photographer.pages= [];
+        for (let i = 0; i < photographer.imagenes.length; i += 6) {
+            this.photographer.pages.push(photographer.imagenes.slice(i, i + 6));
+        }
+    }
+}))
 Alpine.data('upload', () => ({
-    categorias: [],
     imagePreview: null,
     previewImage(event) {
         const file = event.target.files[0];
