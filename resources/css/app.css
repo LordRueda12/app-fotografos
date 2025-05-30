@@ -4,11 +4,7 @@
 @tailwind components;
 @tailwind utilities;
 
-.section.unete {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    overflow: scroll;
-}
+
 header {
     display: flex;
     justify-content: space-around;

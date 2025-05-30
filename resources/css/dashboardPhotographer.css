@@ -180,3 +180,94 @@
 .section.upload button[type="submit"]:hover {
     background-color: rgb(90, 90, 90);
 }
+
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal {
+    background: #232323;
+    color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    padding: 32px 28px 24px 28px;
+    min-width: 320px;
+    max-width: 95vw;
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
+}
+
+.modal h2 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.modal label {
+    color: #e0e0e0;
+    font-size: 1rem;
+    margin-bottom: 3px;
+    font-weight: 500;
+}
+
+.modal input[type="text"],
+.modal input[type="number"],
+.modal textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 7px;
+    border: 1px solid #444;
+    background: #fff;
+    color: #222;
+    font-size: 1rem;
+    margin-bottom: 8px;
+    transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
+    outline: none;
+    box-shadow: none;
+    resize: none;
+}
+
+.modal input[type="text"]:focus,
+.modal input[type="number"]:focus,
+.modal textarea:focus {
+    border-color: #aaa;
+    background: #f7f7f7;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.modal-actions button {
+    padding: 8px 18px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fff;
+    background: rgb(70, 70, 70);
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.modal-actions button[type="button"] {
+    background: #444;
+}
+
+.modal-actions button:hover {
+    background: rgb(90, 90, 90);
+}

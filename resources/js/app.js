@@ -44,7 +44,7 @@ Alpine.data('main', () => ({
         this.photographer = null;
     }
 }));
-Alpine.data('photographers', () => ({
+Alpine.data('all_photographers', () => ({
     originalImages: [],
     images: [],
     pages: [],
@@ -130,6 +130,7 @@ Alpine.data('photographers', () => ({
         this.fetchPhotographers();
     },
     fetchPhotographers() {
+        
         fetch('http://localhost:8000/api/photographers', {
             method: 'GET',
             headers: {
@@ -204,4 +205,59 @@ Alpine.data('upload', () => ({
         .catch(error => console.error('Error al subir la imagen:', error));
     },
 }));
+Alpine.data('photographerProfile', () => ({
+    notifications: [],
+    orders: [],
+    showNewProductModal: false,
+    openModal(modal) {
+        if (modal === 'newProduct') {
+            this.showNewProductModal = true;
+        }
+    },
+    closeModal(modal) {
+        if (modal === 'newProduct') {
+            this.showNewProductModal = false;
+            this.resetNewProduct();
+        }
+    },
+    resetNewProduct() {
+        if (this.$refs && this.$refs.product_name) {
+            this.$refs.product_name.value = '';
+            this.$refs.product_description.value = '';
+            this.$refs.product_price.value = '';
+            if (this.$refs.product_image) this.$refs.product_image.value = '';
+        }
+    },
+    submitNewProduct() {
+        const name = this.$refs.product_name.value;
+        const description = this.$refs.product_description.value;
+        const price = this.$refs.product_price.value;
+        const imageFile = this.$refs.product_image.files[0];
+        if (!name || !description || !price) {
+            alert('Por favor completa todos los campos obligatorios.');
+            return;
+        }
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('description', description);
+        formData.append('price', price);
+        if (imageFile) {
+            formData.append('image', imageFile);
+        }
+        fetch('/api/productos', {
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert('Producto creado exitosamente');
+            this.closeModal('newProduct');
+        })
+        .catch(error => {
+            alert('Error al crear el producto');
+            console.error(error);
+        });
+    },
+}));
+
 Alpine.start();

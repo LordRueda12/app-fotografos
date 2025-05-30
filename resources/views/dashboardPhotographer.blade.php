@@ -8,14 +8,76 @@
     </script>
     <div class="dashboard" x-data="main">
         <header x-init="section= 'myImages'">>
+            <div class="link perfil" :class="section == 'profile' ? 'active' : ''" @click="setSection('profile')">Perfil</div>
             <div class="link albums" :class="section == 'albums' ? 'active' : ''" @click="setSection('albums')">Álbums</div>
             <div class="link subir-imagen" :class="section == 'upload' ? 'active' : ''" @click="setSection('upload')">Subir
                 imágenes</div>
             <div class="link mis-imagenes" :class="section == 'myImages' ? 'active' : ''" @click="setSection('myImages')">Mis
                 imágenes</div>
         </header>
+        <template x-if="section === 'profile'">
+            <div class="profile-dashboard" x-data="photographerProfile">
+                <!-- New Product Modal -->
+                <div x-show="showNewProductModal" class="modal-overlay" @click.self="closeModal('newProduct')">
+                    <div class="modal new-product-modal">
+                        <h2>Nuevo Producto</h2>
+                        <form @submit.prevent="submitNewProduct" enctype="multipart/form-data">
+                            <label>Nombre</label>
+                            <input type="text" x-ref="product_name" required>
+                            <label>Descripción</label>
+                            <textarea x-ref="product_description" required></textarea>
+                            <label>Precio</label>
+                            <input type="number" x-ref="product_price" min="0" required>
+                            <label>Imagen</label>
+                            <input type="file" x-ref="product_image" accept="image/*">
+                            <div class="modal-actions">
+                                <button type="submit">Guardar</button>
+                                <button type="button" @click="closeModal('newProduct')">Cancelar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <section class="notifications">
+                    <h2>Notificaciones</h2>
+                    <div class="notification" x-for="(notification, index) in notifications" :key="index">
+                        <p x-text="notification.message"></p>
+                        <span x-text="formatDate(notification.created_at)"></span>
+                    </div>
+                </section>
+                <section class="quick-actions">
+                    <h2>Acciones rápidas</h2>
+                    <div class="action" @click="openModal('newProduct')">
+                        <i class="fa-solid fa-plus"></i>
+                        <span>Nuevo producto</span>
+                    </div>
+                </section>
+                <section class="orders">
+                    <h2>Órdenes</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Cliente</th>
+                                <th>Fecha</th>
+                                <th>Total</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr x-for="(order, index) in orders" :key="index" @click="showOrderDetails(index)">
+                                <td x-text="order.id"></td>
+                                <td x-text="order.client_name"></td>
+                                <td x-text="formatDate(order.date)"></td>
+                                <td x-text="formatPrice(order.total)"></td>
+                                <td x-text="order.status"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+        </template>
         <template x-if="section === 'photographers'">
-            <div class="section fotografos" x-data="photographers">
+            <div class="section fotografos" x-data="all-photographers">
                 <div class="busqueda">
                     <label for="search" class="search">
                         <input type="text" id="search" placeholder="Nombre del fotógrafo o teléfono">

@@ -13,7 +13,7 @@
         <div class="link fotografos" :class="section== 'photographers'? 'active': ''" @click="setSection('photographers')">Fotógrafos</div>
     </header>
     <template x-if="section === 'photographers'">    
-        <div class="section fotografos" x-data="photographers">
+        <div class="section fotografos" x-data="all_photographers">
             <div class="busqueda">
                 <label for="search" class="search">
                     <input type="text" id="search" placeholder="Nombre del fotógrafo o teléfono" >
@@ -70,7 +70,7 @@
             </template>
         </div>
     </template>
-    <template x-if="!!photographer">
+    <template x-if="photographer != null">
         <div class="fotografo">
             <div class="close" @click="closeProfile">✖️</div>
             <div class="fotografo-header">

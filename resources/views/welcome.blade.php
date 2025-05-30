@@ -155,28 +155,28 @@
                 </div>
 
                 <!-- Email Address -->
-                <div class="mt-4">
+                <div>
                     <x-input-label for="email" :value="__('Email')" />
                     <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
                     <x-input-error :messages="$errors->get('email')" class="mt-2" />
                 </div>
 
                 <!-- Phone -->
-                <div class="mt-4">
+                <div>
                     <x-input-label for="phone" :value="__('Celular')" />
                     <x-text-input id="phone" class="block mt-1 w-full" type="text" name="phone" :value="old('phone')" required autocomplete="tel" />
                     <x-input-error :messages="$errors->get('phone')" class="mt-2" />
                 </div>
 
                 <!-- Password -->
-                <div class="mt-4">
+                <div>
                     <x-input-label for="password" :value="__('Contraseña')" />
                     <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
                     <x-input-error :messages="$errors->get('password')" class="mt-2" />
                 </div>
 
                 <!-- Confirm Password -->
-                <div class="mt-4">
+                <div>
                     <x-input-label for="password_confirmation" :value="__('Confirmar contraseña')" />
                     <x-text-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
                     <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
@@ -211,42 +211,42 @@
                 </div>
 
                 <!-- Email Address -->
-                <div class="mt-4">
+                <div>
                     <x-input-label for="email_photographer" :value="__('Email')" />
                     <x-text-input id="email_photographer" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
                     <x-input-error :messages="$errors->get('email')" class="mt-2" />
                 </div>
 
                 <!-- Phone -->
-                <div class="mt-4">
+                <div>
                     <x-input-label for="phone_photographer" :value="__('Celular')" />
                     <x-text-input id="phone_photographer" class="block mt-1 w-full" type="text" name="phone" :value="old('phone')" required autocomplete="tel" />
                     <x-input-error :messages="$errors->get('phone')" class="mt-2" />
                 </div>
 
                 <!-- Cedula -->
-                <div class="mt-4">
+                <div>
                     <x-input-label for="cedula_photographer" :value="__('Cédula')" />
                     <x-text-input id="cedula_photographer" class="block mt-1 w-full" type="text" name="cedula" :value="old('cedula')" autocomplete="cedula" />
                     <x-input-error :messages="$errors->get('cedula')" class="mt-2" />
                 </div>
 
                 <!-- Precio Foto -->
-                <div class="mt-4">
+                <div>
                     <x-input-label for="precio_foto_photographer" :value="__('Precio por Foto')" />
                     <x-text-input id="precio_foto_photographer" class="block mt-1 w-full" type="number" name="precio_foto" :value="old('precio_foto')" autocomplete="precio_foto" />
                     <x-input-error :messages="$errors->get('precio_foto')" class="mt-2" />
                 </div>
 
                 <!-- Password -->
-                <div class="mt-4">
+                <div>
                     <x-input-label for="password_photographer" :value="__('Contraseña')" />
                     <x-text-input id="password_photographer" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
                     <x-input-error :messages="$errors->get('password')" class="mt-2" />
                 </div>
 
                 <!-- Confirm Password -->
-                <div class="mt-4">
+                <div>
                     <x-input-label for="password_confirmation_photographer" :value="__('Confirmar contraseña')" />
                     <x-text-input id="password_confirmation_photographer" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
                     <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />

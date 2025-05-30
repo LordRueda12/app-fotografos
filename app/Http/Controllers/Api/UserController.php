@@ -27,7 +27,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $users = User::with('imagenes')->get();
         return response()->json($users, 200);
     }
 
