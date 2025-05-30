@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('photographer_id')->constrained('users', 'id')->onDelete('cascade');
             $table->json('details');
             $table->integer('total');
-            $table->enum('status', ['pendiente', 'confirmada', 'completada', 'cancelada'])->default('pendiente');
+            $table->enum('status', ['pendiente', 'confirmada', 'pagada', 'completada', 'cancelada'])->default('pendiente');
             $table->timestamps();
         });
     }

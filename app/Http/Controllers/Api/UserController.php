@@ -13,7 +13,7 @@ class UserController extends Controller
      */
     public function getPhotographers()
     {
-        $photographers = User::where('role_id', 2)->with('imagenes')->get();
+        $photographers = User::where('role_id', 2)->with('imagenes', 'products')->get();
 
         if ($photographers->isEmpty()) {
             return response()->json(['mensaje' => 'No se encontraron fotógrafos'], 404);
@@ -27,7 +27,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::with('imagenes')->get();
+        $users = User::with('imagenes', 'products')->get();
         return response()->json($users, 200);
     }
 
@@ -36,7 +36,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::find($id);
+        $user = User::with('imagenes', 'products')->find($id);
 
         if (!$user) {
             return response()->json(['mensaje' => 'Usuario no encontrado'], 404);
@@ -61,7 +61,6 @@ class UserController extends Controller
             'email' => 'sometimes|required|email|max:255|unique:users,email,' . $id,
             'phone' => 'sometimes|required|string|max:15',
             'cedula' => 'nullable|string|max:20',
-            'precio_foto' => 'nullable|integer',
             'certificado' => 'nullable|image|max:2048',
             'profile_image' => 'nullable|image|max:2048',
             'description' => 'nullable|string|max:500',

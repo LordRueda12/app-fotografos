@@ -271,3 +271,159 @@
 .modal-actions button:hover {
     background: rgb(90, 90, 90);
 }
+
+.profile-dashboard {
+    max-width: 900px;
+    margin: 2rem auto;
+    background: #181818;
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+    padding: 2.5rem 2rem 2rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    color: #e0e0e0;
+}
+
+.profile-dashboard .balance {
+    background: linear-gradient(90deg, #232323 0%, #181818 100%);
+    color: #fafafa;
+    border-radius: 12px;
+    padding: 1.5rem 2rem;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+}
+.profile-dashboard .balance h2 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #b0b0b0;
+}
+.profile-dashboard .balance h1 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin: 0;
+    color: #fff;
+}
+
+.profile-dashboard .quick-actions {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: flex-end;
+}
+.profile-dashboard .quick-actions .action {
+    background: #232323;
+    color: #fafafa;
+    border-radius: 8px;
+    padding: 0.7rem 1.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    transition: background 0.2s;
+    border: 1px solid #292929;
+}
+.profile-dashboard .quick-actions .action:hover {
+    background: #353535;
+}
+
+.profile-dashboard table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #232323;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    color: #e0e0e0;
+}
+.profile-dashboard th, .profile-dashboard td {
+    padding: 0.85rem 1rem;
+    text-align: left;
+}
+.profile-dashboard th {
+    background: #181818;
+    color: #b0b0b0;
+    font-weight: 600;
+    border-bottom: 2px solid #232323;
+}
+.profile-dashboard tr {
+    transition: background 0.15s;
+}
+.profile-dashboard tr:hover {
+    background: #232323;
+}
+.profile-dashboard td select {
+    border-radius: 6px;
+    border: 1px solid #292929;
+    padding: 0.3rem 0.7rem;
+    background: #181818;
+    color: #e0e0e0;
+    font-size: 1rem;
+}
+
+/* Modal overlay and modal box */
+.profile-dashboard .modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.profile-dashboard .modal {
+    background: #181818;
+    color: #fafafa;
+    border-radius: 14px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.28);
+    padding: 2rem 2.5rem;
+    min-width: 340px;
+    max-width: 95vw;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+.profile-dashboard .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+.profile-dashboard .modal-actions button {
+    background: #232323;
+    color: #fafafa;
+    border: none;
+    border-radius: 6px;
+    padding: 0.5rem 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.profile-dashboard .modal-actions button:hover {
+    background: #353535;
+}
+
+/* Product image in table */
+.profile-dashboard .products img {
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    background: #232323;
+    max-width: 80px;
+    max-height: 80px;
+}
+
+@media (max-width: 700px) {
+    .profile-dashboard {
+        padding: 1rem 0.5rem;
+    }
+    .profile-dashboard .modal {
+        padding: 1rem 0.5rem;
+    }
+    .profile-dashboard table th, .profile-dashboard table td {
+        padding: 0.5rem 0.4rem;
+    }
+}
+
+.section.mis-imagenes{
+    padding: 2rem;
+}

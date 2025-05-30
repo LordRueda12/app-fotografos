@@ -7,7 +7,7 @@
         const user = @json(Auth::user());
     </script>
     <div class="dashboard" x-data="main">
-        <header x-init="section= 'myImages'">>
+        <header x-init="section= 'myImages'">
             <div class="link perfil" :class="section == 'profile' ? 'active' : ''" @click="setSection('profile')">Perfil</div>
             <div class="link albums" :class="section == 'albums' ? 'active' : ''" @click="setSection('albums')">Álbums</div>
             <div class="link subir-imagen" :class="section == 'upload' ? 'active' : ''" @click="setSection('upload')">Subir
@@ -37,15 +37,11 @@
                         </form>
                     </div>
                 </div>
-                <section class="notifications">
-                    <h2>Notificaciones</h2>
-                    <div class="notification" x-for="(notification, index) in notifications" :key="index">
-                        <p x-text="notification.message"></p>
-                        <span x-text="formatDate(notification.created_at)"></span>
-                    </div>
+                <section class="balance">
+                    <h2>Balance</h2>
+                    <h1 class="ordenesPagas" x-text="formatPrice(balance)"></h1>
                 </section>
                 <section class="quick-actions">
-                    <h2>Acciones rápidas</h2>
                     <div class="action" @click="openModal('newProduct')">
                         <i class="fa-solid fa-plus"></i>
                         <span>Nuevo producto</span>
@@ -64,13 +60,83 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr x-for="(order, index) in orders" :key="index" @click="showOrderDetails(index)">
+                            <template x-for="(order, index) in orders" :key="index" >
+                            <tr @click="showOrderDetails(index)">
                                 <td x-text="order.id"></td>
                                 <td x-text="order.client_name"></td>
-                                <td x-text="formatDate(order.date)"></td>
+                                <td x-text="formatDate(order.created_at)"></td>
                                 <td x-text="formatPrice(order.total)"></td>
-                                <td x-text="order.status"></td>
+                                <td>
+                                    <select :value="order.status" @click.stop @change="updateOrderStatus(order, $event.target.value)">
+                                        <option value="pendiente">Pendiente</option>
+                                        <option value="confirmada">Confirmada</option>
+                                        <option value="pagada">Pagada</option>
+                                        <option value="completada">Completada</option>
+                                        <option value="cancelada">Cancelada</option>
+                                    </select>
+                                </td>
                             </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                    <!-- Order Details Modal -->
+                    <div x-show="showOrderDetailsModal" class="modal-overlay" @click.self="closeOrderDetailsModal()">
+                        <div class="modal order-details-modal">
+                            <h2>Detalles del Pedido</h2>
+                            <template x-if="selectedOrder">
+                                <div>
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Producto</th>
+                                                <th>Precio</th>
+                                                <th>Cantidad</th>
+                                                <th>Subtotal</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <template x-for="item in selectedOrder.details" :key="item.id">
+                                                <tr>
+                                                    <td x-text="item.name"></td>
+                                                    <td x-text="formatPrice(item.price)"></td>
+                                                    <td x-text="item.quantity"></td>
+                                                    <td x-text="formatPrice(item.price * item.quantity)"></td>
+                                                </tr>
+                                            </template>
+                                        </tbody>
+                                    </table>
+                                    <div style="margin-top:1em; font-weight:bold;">Total: <span x-text="formatPrice(selectedOrder.total)"></span></div>
+                                </div>
+                            </template>
+                            <div class="modal-actions">
+                                <button type="button" @click="closeOrderDetailsModal()">Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- Products Table -->
+                <section class="products">
+                    <h2>Mis Productos</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Descripción</th>
+                                <th>Precio</th>
+                                <th>Imagen</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template x-for="(product, index) in products" :key="product.id">
+                                <tr>
+                                    <td x-text="product.name"></td>
+                                    <td x-text="product.description"></td>
+                                    <td x-text="product.price"></td>
+                                    <td>
+                                        <img x-show="product.image" :src="'/storage/' + product.image" alt="Imagen del producto" style="max-width: 80px; max-height: 80px;">
+                                    </td>
+                                </tr>
+                            </template>
                         </tbody>
                     </table>
                 </section>
@@ -89,12 +155,6 @@
                             <option :value="categoria.id" x-text="categoria.nombre"></option>
                         </template>
                     </select>
-                </div>
-                <div class="card-container">
-                    <div class="card">Impresiones Fotográficas</div>
-                    <div class="card">Servicio Digital</div>
-                    <div class="card">Retrato</div>
-                    <div class="card">Combos</div>
                 </div>
                 <template x-for="(page, index) in pages" :key="index">
                     <div class="picture-container">
@@ -174,12 +234,6 @@
                             <option :value="categoria.id" x-text="categoria.nombre"></option>
                         </template>
                     </select>
-                </div>
-                <div class="card-container">
-                    <div class="card">Impresiones Fotográficas</div>
-                    <div class="card">Servicio Digital</div>
-                    <div class="card">Retrato</div>
-                    <div class="card">Combos</div>
                 </div>
                 <template x-for="(page, index) in pages" :key="index">
                     <div class="picture-container">

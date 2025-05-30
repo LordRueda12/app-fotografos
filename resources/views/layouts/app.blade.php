@@ -7,6 +7,7 @@
     <title>@yield('title')</title>
     {{-- <link rel="icon" type="image/x-icon" href="/images/favicon.ico"> --}}
     @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/css/dashboardPhotographer.css'])
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
  <div id="app">

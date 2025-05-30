@@ -231,12 +231,6 @@
                     <x-input-error :messages="$errors->get('cedula')" class="mt-2" />
                 </div>
 
-                <!-- Precio Foto -->
-                <div>
-                    <x-input-label for="precio_foto_photographer" :value="__('Precio por Foto')" />
-                    <x-text-input id="precio_foto_photographer" class="block mt-1 w-full" type="number" name="precio_foto" :value="old('precio_foto')" autocomplete="precio_foto" />
-                    <x-input-error :messages="$errors->get('precio_foto')" class="mt-2" />
-                </div>
 
                 <!-- Password -->
                 <div>

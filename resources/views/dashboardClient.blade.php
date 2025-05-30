@@ -84,12 +84,7 @@
                     <div class="fotografo-description" x-text="photographer.description"></div>
                 </div>
             </div>
-            <div class="card-container">
-                <div class="card">Impresiones Fotográficas</div>
-                <div class="card">Servicio Digital</div>
-                <div class="card">Retrato</div>
-                <div class="card">Combos</div>
-            </div>
+           
             <template x-for="(page, index) in photographer.pages" :key="index">
             <div class="picture-container">
                 <template x-if="page[0]">
@@ -126,6 +121,7 @@
                 </template>
             </div>
             </template>
+            <button class="order-button" @click="$store.orderModal.open(photographer)">Pedir productos</button>
             <button class="contact-button">Contactar</button>
         </div>
     </template>
@@ -171,5 +167,32 @@
             </div>
         </div>
         </template>
+
+        <!-- Order Modal (global, outside of templates) -->
+        <div x-data x-show="$store.orderModal.show" class="modal-overlay" @click.self="$store.orderModal.close()">
+            <div class="modal order-modal">
+                <h2>Realizar Pedido a <span x-text="$store.orderModal.photographer?.name"></span></h2>
+                <form @submit.prevent="$store.orderModal.submit()">
+                    <div class="product-list">
+                        <template x-for="product in $store.orderModal.products" :key="product.id">
+                            <label class="product-option">
+                                <input type="checkbox" :value="product.id" @change="$store.orderModal.toggle(product)"
+                                    :checked="$store.orderModal.selected.find(p => p.product.id === product.id) != null">
+                                <span x-text="product.name"></span> - <span x-text="product.price"></span> $
+                                <template x-if="$store.orderModal.selected.find(p => p.product.id === product.id)">
+                                    <input type="number" min="1" style="width:60px;margin-left:8px;" :value="$store.orderModal.selected.find(p => p.product.id === product.id)?.quantity"
+                                        @input="$store.orderModal.setQuantity(product, $event.target.value)">
+                                </template>
+                            </label>
+                        </template>
+                    </div>
+                    <div class="order-total">Total: <span x-text="$store.orderModal.total"></span> $</div>
+                    <div class="modal-actions">
+                        <button type="submit">Confirmar Pedido</button>
+                        <button type="button" @click="$store.orderModal.close()">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
 </div>
 @endsection

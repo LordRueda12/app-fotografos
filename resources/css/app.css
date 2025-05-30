@@ -4,13 +4,32 @@
 @tailwind components;
 @tailwind utilities;
 
-
-header {
+body{
+    background-color:rgb(68, 68, 68)
+}
+header:not(.profile-edit-bg header) {
     display: flex;
     justify-content: space-around;
     align-items: center;
     background-color: rgb(30, 30, 30);
 }
+.profile-edit-bg header{
+    padding: 0.4em;
+    border-radius: 8px ;
+    display:grid;
+    place-content: center ;
+    background-color: rgba(0,0,0,0.18);
+    & h2 {
+        color:#dcdcdc;
+
+    }
+    & p {
+        color: #646464;
+        
+    }
+    
+}
+
 header .link {
     padding: 2.6em 1em;
     color: white;
@@ -134,5 +153,112 @@ nav {
                 font-weight: bold;
             }
         }
+    }
+}
+.order-button {
+    margin: 1em 0;
+    padding: 0.7em 2em;
+    background: #2d8f2d;
+    color: #fff;
+    border: none;
+    border-radius: 0.5em;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.order-button:hover {
+    background: #256d25;
+}
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.modal.order-modal {
+    background: #fff;
+    padding: 2em;
+    border-radius: 1em;
+    min-width: 320px;
+    max-width: 90vw;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.2);
+}
+.product-list {
+    margin-bottom: 1em;
+    max-height: 200px;
+    overflow-y: auto;
+}
+.product-option {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5em;
+    gap: 0.5em;
+}
+.order-total {
+    font-weight: bold;
+    margin-bottom: 1em;
+}
+.modal-actions {
+    display: flex;
+    gap: 1em;
+    justify-content: flex-end;
+}
+
+/* --- Profile Edit (profile/edit.blade.php) dark styles to match photographer profile --- */
+.profile-edit-bg {
+    background: rgb(68, 68, 68) !important;
+    min-height: 100vh;
+}
+.profile-edit-card {
+    background: #232323 !important;
+    color: #f0f0f0 !important;
+    border-radius: 14px !important;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.18) !important;
+    border: 1px solid #444 !important;
+}
+.profile-edit-card input,
+.profile-edit-card textarea,
+.profile-edit-card select {
+    background: #181818 !important;
+    color: #f0f0f0 !important;
+    border: 1px solid #444 !important;
+    border-radius: 7px !important;
+}
+.profile-edit-card input:focus,
+.profile-edit-card textarea:focus,
+.profile-edit-card select:focus {
+    border-color: #888 !important;
+    background: #232323 !important;
+}
+.profile-edit-card label {
+    color: #b0b0b0 !important;
+}
+.profile-edit-card .btn,
+.profile-edit-card button[type="submit"] {
+    background: #444 !important;
+    color: #fff !important;
+    border-radius: 7px !important;
+    border: none !important;
+    padding: 0.6em 1.5em !important;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+.profile-edit-card .btn:hover,
+.profile-edit-card button[type="submit"]:hover {
+    background: #232323 !important;
+}
+
+/* Utility for spacing */
+.profile-edit-card {
+    padding: 2rem 2.5rem !important;
+}
+
+/* Responsive for profile edit */
+@media (max-width: 700px) {
+    .profile-edit-card {
+        padding: 1rem 0.5rem !important;
     }
 }

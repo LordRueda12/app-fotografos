@@ -27,7 +27,6 @@ return new class extends Migration
             $table->string('password');
             $table->string('phone'); 
             $table->string('cedula')->nullable(); 
-            $table->integer('precio_foto')->nullable(); 
             $table->string('certificado')->nullable(); 
             $table->foreignId('role_id')->constrained('roles')->onDelete('cascade'); 
             $table->string('profile_image')->nullable();

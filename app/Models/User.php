@@ -23,7 +23,6 @@ class User extends Authenticatable
         'password',
         'phone',        // Added phone column
         'cedula',       // Added cedula column
-        'precio_foto',  // Added precio_foto column
         'certificado',  // Added certificado column
         'role_id',      // Added role_id column
         'profile_image', // Added profile_image column

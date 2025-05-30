@@ -37,9 +37,7 @@ class ProductController extends Controller
             'price' => 'required|integer',
             'image' => 'nullable|file|image|max:2048',
         ]);
-        $validated['photographer_id'] = Auth::id();
-        //log Auth object
-        \Log::info('Authenticated User:', ['user_id' => Auth::user()]);
+        $validated['photographer_id'] = Auth::user()->id;
         if ($request->hasFile('image')) {
             $filePath = $request->file('image')->store('imagenes', 'public');
             $validated['image'] = $filePath;
