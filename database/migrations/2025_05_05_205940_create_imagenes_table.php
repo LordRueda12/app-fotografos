@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('imagenes', function (Blueprint $table) {
             $table->id();
             $table->string('ruta');
+            $table->string('nombre');
             $table->foreignId('categoria_id')->constrained('categoria_imagenes')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();

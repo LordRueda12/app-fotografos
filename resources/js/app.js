@@ -3,7 +3,63 @@ import './bootstrap';
 import Alpine from 'alpinejs';
 
 window.Alpine = Alpine;
+Alpine.data('pedidosCliente', () => ({
+    orders: [],
+    init(){
+        this.fetchOrders();
+    },
+    fetchOrders(){
+        fetch(`http://localhost:8000/api/ordenes?client_id=${user.id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            credentials: 'same-origin'
+        })
+        .then(response => response.json())
+        .then(data => {
+            this.orders = data;
+            console.log(this.orders);
+        })
+        .catch(error => console.error('Error:', error));
+    }
+}));
+Alpine.data('albums', () => ({
+    albumList: {},
+    showModal: false,
+    modalImages: [],
+    openModal(images) { this.modalImages = images; this.showModal = true; },
+    closeModal() { this.showModal = false; this.modalImages = []; },
+    init() {
+        this.fetchAlbums();
+    },
+    fetchAlbums() {
+        fetch(`http://localhost:8000/api/imagenes/usuario/${user.id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            this.images = data;
+            this.pages = [];
+            const albumsByCategory = {};
+            data.forEach(img => {
+                const catName = img.categoria?.nombre || (img.categoria_nombre || 'Sin categoría');
+                if (!albumsByCategory[catName]) {
+                    albumsByCategory[catName] = [];
+                }
+                albumsByCategory[catName].push(img);
+            });
+            this.albumList = Object.values(albumsByCategory); // Array of arrays, each array is images in a category
+            console.log(this.albumList);
+        })
+        .catch(error => console.error('Error:', error));
+    }
 
+}))
 Alpine.data('main', () => ({
     categorias: [],
     section: 'welcome',
@@ -54,6 +110,9 @@ Alpine.data('main', () => ({
             minimumFractionDigits: 0,
             maximumFractionDigits: 0
         }).format(price);
+    },
+    normalize(str){
+        return str.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase();
     }
 }));
 Alpine.data('all_photographers', () => ({
@@ -82,13 +141,19 @@ Alpine.data('all_photographers', () => ({
         })
         .catch(error => console.error('Error:', error));
     },
-    filterByCategory() {
-        const selectedCategory = this.$refs.categoria_photographers.value;
-        if (selectedCategory === '') {
-            this.images = this.originalImages;
-        } else {
-            this.images = this.originalImages.filter(image => image.categoria_id == selectedCategory);
+    filter() {
+        const selectedCategory = this.$refs.categoria_my_images.value;
+        const searchQuery = this.normalize(this.$refs.search_my_images.value.toLowerCase());
+        let filtered = this.originalImages;
+        if (selectedCategory !== '') {
+            filtered = filtered.filter(image => image.categoria_id == selectedCategory);
         }
+        if (searchQuery) {
+            filtered = filtered.filter(image =>
+                image.nombre && this.normalize(image.nombre.toLowerCase()).includes(searchQuery)
+            );
+        }
+        this.images = filtered;
         this.pages = [];
         for (let i = 0; i < this.images.length; i += 6) {
             this.pages.push(this.images.slice(i, i + 6));
@@ -121,13 +186,19 @@ Alpine.data('myImages', () => ({
         })
         .catch(error => console.error('Error:', error));
     },
-    filterByCategory() {
+    filter() {
         const selectedCategory = this.$refs.categoria_my_images.value;
-        if (selectedCategory === '') {
-            this.images = this.originalImages;
-        } else {
-            this.images = this.originalImages.filter(image => image.categoria_id == selectedCategory);
+        const searchQuery = this.normalize(this.$refs.search_my_images.value.toLowerCase());
+        let filtered = this.originalImages;
+        if (selectedCategory !== '') {
+            filtered = filtered.filter(image => image.categoria_id == selectedCategory);
         }
+        if (searchQuery) {
+            filtered = filtered.filter(image =>
+                image.nombre && this.normalize(image.nombre.toLowerCase()).includes(searchQuery)
+            );
+        }
+        this.images = filtered;
         this.pages = [];
         for (let i = 0; i < this.images.length; i += 6) {
             this.pages.push(this.images.slice(i, i + 6));
@@ -253,16 +324,23 @@ Alpine.data('upload', () => ({
     uploadImage() {
         const fileInput = this.$refs.ruta_upload_image;
         const titleInput = this.$refs.titulo_upload_image;
+        const nombreInput = this.$refs.titulo_upload_image;
         const categorySelect = this.$refs.categoria_upload_image;
 
         if (!fileInput.files[0]) {
             alert('Por favor selecciona una imagen.');
             return;
         }
+        if (!nombreInput.value) {
+            alert('Por favor ingresa el nombre de la imagen.');
+            return;
+        }
 
+        const file = fileInput.files[0];
         const formData = new FormData();
-        formData.append('ruta', fileInput.files[0]);
+        formData.append('ruta', file);
         formData.append('titulo', titleInput.value);
+        formData.append('nombre', nombreInput.value); // Use input value for nombre
         formData.append('categoria_id', categorySelect.value);
         formData.append('user_id', user.id);
 
@@ -277,6 +355,7 @@ Alpine.data('upload', () => ({
             this.imagePreview = null;
             fileInput.value = '';
             titleInput.value = '';
+            nombreInput.value = '';
             categorySelect.value = '';
         })
         .catch(error => console.error('Error al subir la imagen:', error));
@@ -311,7 +390,9 @@ Alpine.data('photographerProfile', () => ({
         .catch(error => console.error('Error fetching orders:', error));
     },
     async fetchProducts() {
-        await fetch('/api/productos', {
+        const id = this.photographerId || (typeof user !== 'undefined' ? user.id : null);
+        if (!id) return;
+        await fetch(`/api/productos?photographer_id=${id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -320,13 +401,13 @@ Alpine.data('photographerProfile', () => ({
         .then(response => response.json())
         .then(data => {
             this.products = data;
-            console.log(this.products)
+            console.log(this.products);
         })
         .catch(error => console.error('Error fetching products:', error));
     },
     calculateBalance() {
-        let total= 0;
-        this.balance= this.orders.forEach((order) => {
+        let total = 0;
+        this.orders.forEach((order) => {
             if (['pagada', 'completada'].includes(order.status)) {
                 total += order.total;
             }

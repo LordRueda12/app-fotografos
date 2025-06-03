@@ -38,7 +38,7 @@ class RegisteredUserController extends Controller
             'certificado' => ['nullable', 'string', 'max:255'],
             'role_id' => ['required', 'integer', 'exists:roles,id'],
             'profile_image' => ['nullable', 'image'], 
-            'description' => ['nullable', 'string', 'max:500'],
+            'description' => ['nullable', 'string', 'max:1500'],
         ]);
 
 

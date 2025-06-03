@@ -12,9 +12,16 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $orders = Order::with(['client', 'photographer'])->get();
+        $query = Order::with(['client', 'photographer']);
+        if ($request->has('photographer_id')) {
+            $query->where('photographer_id', $request->input('photographer_id'));
+        }
+        if ($request->has('user_id')) {
+            $query->where('client_id', $request->input('user_id'));
+        }
+        $orders = $query->get();
         return response()->json($orders);
     }
 

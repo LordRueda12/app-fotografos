@@ -1,19 +1,16 @@
 .welcome:not(.section) {
-    padding: 20px;
     font-family: Arial, sans-serif;
     background-color: rgb(30, 30, 30); 
     color: white; 
     height: 100vh; 
     display: flex;
     flex-direction: column;
-    display: flex;
-    flex-direction: column;
+   
 }
 .section{
     flex-grow: 1;
 }
 .welcome.section {
-    padding: 20px;
     font-family: Arial, sans-serif;
     background-color: rgb(30, 30, 30); 
     color: white; 
@@ -22,6 +19,10 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+      background: #232526;  
+    background: -webkit-linear-gradient(to right, #414345, #232526);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #414345, #232526); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
 }
 .dashboard {
     height: 100vh;

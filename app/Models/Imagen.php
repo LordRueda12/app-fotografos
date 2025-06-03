@@ -12,8 +12,12 @@ class Imagen extends Model
         'ruta',
         'categoria_id',
         'user_id',
+        'nombre',
     ];
-
+    protected $with = [
+        'categoria',
+        'user',
+    ];
     public function categoria()
     {
         return $this->belongsTo(CategoriaImagen::class, 'categoria_id');
@@ -23,4 +27,5 @@ class Imagen extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+    
 }

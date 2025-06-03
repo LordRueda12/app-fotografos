@@ -12,9 +12,13 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::with('photographer')->get();
+        $query = Product::with('photographer');
+        if ($request->has('photographer_id')) {
+            $query->where('photographer_id', $request->input('photographer_id'));
+        }
+        $products = $query->get();
         return response()->json($products);
     }
 

@@ -10,6 +10,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
+    <script>
+        const user= @json(auth()->user());
+    </script>
  <div id="app">
     
         @include('layouts.navigation')

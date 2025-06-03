@@ -30,7 +30,7 @@ return new class extends Migration
             $table->string('certificado')->nullable(); 
             $table->foreignId('role_id')->constrained('roles')->onDelete('cascade'); 
             $table->string('profile_image')->nullable();
-            $table->string('description')->nullable();
+            $table->string('description', 1500)->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

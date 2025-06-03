@@ -25,6 +25,7 @@ class ImagenController extends Controller
         $validatedData = $request->validate([
             'ruta' => 'required|file|mimes:jpg,jpeg,png|max:2048',
             'titulo' => 'required|string|max:255',
+            'nombre' => 'required|string|max:255',
             'categoria_id' => 'required|exists:categoria_imagenes,id',
             'user_id' => 'required|exists:users,id',
         ]);
@@ -36,6 +37,7 @@ class ImagenController extends Controller
         $imagen = Imagen::create([
             'ruta' => $filePath,
             'titulo' => $validatedData['titulo'],
+            'nombre' => $validatedData['nombre'],
             'categoria_id' => $validatedData['categoria_id'],
             'user_id' => $validatedData['user_id'],
         ]);
@@ -75,6 +77,7 @@ class ImagenController extends Controller
             'ruta' => 'sometimes|required|string|max:255',
             'categoria_id' => 'sometimes|required|exists:categoria_imagenes,id',
             'user_id' => 'sometimes|required|exists:users,id',
+            'nombre' => 'sometimes|required|string|max:255',
         ]);
 
         $imagen->update($validatedData);
